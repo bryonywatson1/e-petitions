@@ -1642,10 +1642,24 @@ CREATE INDEX index_archived_petition_emails_on_petition_id ON archived_petition_
 
 
 --
--- Name: index_archived_petitions_on_description; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_archived_petitions_on_action; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_archived_petitions_on_description ON archived_petitions USING gin (to_tsvector('english'::regconfig, description));
+CREATE INDEX index_archived_petitions_on_action ON archived_petitions USING gin (to_tsvector('english'::regconfig, (action)::text));
+
+
+--
+-- Name: index_archived_petitions_on_additional_details; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_archived_petitions_on_additional_details ON archived_petitions USING gin (to_tsvector('english'::regconfig, additional_details));
+
+
+--
+-- Name: index_archived_petitions_on_background; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_archived_petitions_on_background ON archived_petitions USING gin (to_tsvector('english'::regconfig, (background)::text));
 
 
 --
@@ -1667,13 +1681,6 @@ CREATE INDEX index_archived_petitions_on_signature_count ON archived_petitions U
 --
 
 CREATE INDEX index_archived_petitions_on_state_and_closed_at ON archived_petitions USING btree (state, closed_at);
-
-
---
--- Name: index_archived_petitions_on_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_archived_petitions_on_title ON archived_petitions USING gin (to_tsvector('english'::regconfig, (title)::text));
 
 
 --
@@ -2444,6 +2451,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170611190354');
 INSERT INTO schema_migrations (version) VALUES ('20170612120307');
 
 INSERT INTO schema_migrations (version) VALUES ('20170612144648');
+
+INSERT INTO schema_migrations (version) VALUES ('20170613113510');
 
 INSERT INTO schema_migrations (version) VALUES ('20170615133536');
 
